@@ -5,20 +5,20 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
  
-@Path("/hello")
-public class HelloWorldResource {
+@Path("/aio")
+public class AioResource {
  
     @GET
     @Produces("text/plain")
     public String getMessage() {
-        return "Hello, World!";
+        return "Aio, World!";
     }
 
     @GET
     @Path("{name}")
     @Produces("text/plain")
     public String getMessage(@PathParam("name") String name) {
-        return "Hello, " + name + "!";
+        return "Aio, " + name + "!";
     }
 
 }
