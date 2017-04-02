@@ -48,9 +48,18 @@
               </div>
               <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                  <li><a href="https://github.com/christianwong" target="_blank">GitHub</a></li>
-                  <li><a href="https://twitter.com/christianwong" target="_blank">Twitter</a></li>
-                  <li><a href="https://www.instagram.com/christianwong/" target="_blank">Instagram</a></li>
+                  <li><a data-bind="click: openBlog">Blog</a></li>
+                  <li><a data-bind="click: openGitHub">GitHub</a></li>
+                  <li><a data-bind="click: openTwitter">Twitter</a></li>
+                  <li><a data-bind="click: openInstagram">Instagram</a></li>
+                  <li>
+                    <form class="navbar-form navbar-left" role="search">
+                      <div class="input-group">
+                        <input id="search" type="text" class="form-control" placeholder="comming soon..">
+                        <span class="input-group-btn"><button id="submitSearch" type="submit" class="btn btn-default" data-bind="click: doSearch">&#128269;</button></span>
+                      </div>
+                    </form>
+                  </li>
                 </ul>
               </div><!--/.nav-collapse -->
             </div>
@@ -60,6 +69,12 @@
         </div>
       </div>
       <div id="body"></div>
+
+      <h2 data-bind="visible: searches.length > 0">history</h2>
+      <div data-bind="foreach: searches">
+        <span><span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span> <code><span data-bind="text: command"></span></code></span>
+        <div class="alert alert-info" role="alert"><span data-bind="html: result"></span></div>
+      </div>
 
     </div><!-- /.container -->
 
@@ -71,5 +86,71 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/knockout/3.4.1/knockout-min.js"></script>
+    <script type="text/javascript">
+      $(document).ready(function() {
+        $('#submitSearch').click(function() {
+          console.log('search for: '+$('#search').val());
+        });
+      });
+      $(document).keypress(function() {
+        $('#search').focus();
+      });
+      function openTab(url) {
+        var win = window.open(url, '_blank');
+        if (win) {
+            //Browser has allowed it to be opened
+            win.focus();
+        }
+      }
+    </script>
+    <script type="text/javascript">
+      function SearchObject(command, result) {
+        var self = this;
+        self.command = ko.observable(command);
+        self.result = ko.observable(result);
+      }
+      function SearchViewModel() {
+        var self = this;
+        self.searches = ko.observableArray([]);
+        self.doSearch = function() {
+          var command = $('#search').val();
+          var result = 'this is an example <code>output</code> comming from the <strong>server</strong> for command: <code>'+command+'</code>.';
+          $('#search').val('');
+          if (command === '') {
+            return;
+          } else if (command === 'clear') {
+            self.searches.removeAll();
+            return;
+          } else if (command === 'github') {
+            openTab('https://github.com/christianwong');
+          } else if (command === 'twitter') {
+            openTab('https://twitter.com/christianwong');
+          } else if (command === 'instagram') {
+            openTab('https://www.instagram.com/christianwong/');
+          } else if (command == 'upload') {
+            result = '<form method="post" enctype="multipart/form-data"><input type="file" id="file" name="file" /><p style="text-align: right; margin-top: 20px;"><input type="button" value="Upload File" class="btn btn-lg btn-primary" /></p></form>';
+          }
+          self.searches.push(new SearchObject(command, result));
+          window.scrollTo(0,document.body.scrollHeight);
+        };
+        self.openBlog = function() {
+          $('#search').val('blog');
+          self.doSearch();
+        };
+        self.openGitHub = function() {
+          $('#search').val('github');
+          self.doSearch();
+        };
+        self.openTwitter = function() {
+          $('#search').val('twitter');
+          self.doSearch();
+        };
+        self.openInstagram = function() {
+          $('#search').val('instagram');
+          self.doSearch();
+        };
+      }
+      ko.applyBindings(new SearchViewModel());
+    </script>
   </body>
 </html>
