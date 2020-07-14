@@ -5,6 +5,11 @@ import { join } from `path`;
 
 const app = express();
 
+app.use((req, res, next) => {
+  res.append('Strict-Transport-Security', 'max-age=63072000; includeSubDomains; preload');
+  next();
+});
+
 app.use('/static', static('static'));
 
 app.get('/', (req, res) => {
