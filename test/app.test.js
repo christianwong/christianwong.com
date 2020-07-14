@@ -1,6 +1,6 @@
-const app = require('../app');
+import app from '../app';
 
-const request = require('supertest');
+import request from 'supertest';
 
 describe('gae_node_request_example', () => {
   describe('GET /api', () => {
