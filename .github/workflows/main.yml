@@ -1,0 +1,36 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v1
+      with:
+        node-version: 12.x
+        
+    - name: Install dependencies
+      run: yarn install
+      
+    - name: Run tests
+      run: yarn test --watchAll false
+      
+    - uses: GoogleCloudPlatform/github-actions/setup-gcloud@master
+      with:
+        version: '290.0.1'
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        export_default_credentials: true
+    - run: gcloud info
+      
+    - id: deploy
+      uses: GoogleCloudPlatform/github-actions/appengine-deploy@master
+      with:
+        credentials: ${{ secrets.gcp_credentials }}
