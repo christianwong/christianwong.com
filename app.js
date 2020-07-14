@@ -1,7 +1,7 @@
 'use strict';
 
-import express, { static } from 'express';
-import { join } from `path`;
+const express = require('express');
+const path = require(`path`);
 
 const app = express();
 
@@ -10,10 +10,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/static', static('static'));
+app.use('/static', express.static('static'));
 
 app.get('/', (req, res) => {
-  res.sendFile(join(__dirname, 'index.html'));
+  res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.get('/api', (req, res) => {
@@ -26,4 +26,4 @@ app.listen(PORT, () => {
   console.log('Press Ctrl+C to quit.');
 });
 
-export default app;
+module.exports = app;
