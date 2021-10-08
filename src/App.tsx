@@ -17,7 +17,7 @@ const App: React.FC = () => {
 
       {/* <PlaceHolder>
         <BlogOverview />
-      </PlaceHolder> */}
+      </PlaceHolder>  */}
 
       <Footer />
 
