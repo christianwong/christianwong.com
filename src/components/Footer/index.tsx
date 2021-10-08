@@ -8,7 +8,7 @@ const Footer: React.FC = () => {
     <FooterDark>
       <Contact />
 
-      <div>
+      {/* <div>
         Site version:&nbsp;
         <a
           href="https://github.com/christianwong/christianwong.dev/releases/tag/##RELEASE_TAG_NAME##"
@@ -17,7 +17,7 @@ const Footer: React.FC = () => {
         >
           ##RELEASE_TAG_NAME##
         </a>
-      </div>
+      </div> */}
     </FooterDark>
   );
 };
