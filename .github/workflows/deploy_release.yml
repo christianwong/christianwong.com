@@ -4,6 +4,9 @@ on:
 
   release:
     types: [released]
+  push:
+    branches: [ main ]
+    paths: 'src/**'
   workflow_dispatch:
 
 jobs:
