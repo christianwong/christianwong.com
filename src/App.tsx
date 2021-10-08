@@ -5,7 +5,7 @@ import GlobalStyle, { PlaceHolder } from './styles/global';
 import ProfileHeader from './components/ProfileHeader';
 import ProfileDescription from './components/ProfileDescription';
 import Footer from './components/Footer';
-import BlogOverview from './components/BlogOverview';
+// import BlogOverview from './components/BlogOverview';
 
 const App: React.FC = () => {
   return (
@@ -15,9 +15,9 @@ const App: React.FC = () => {
         <ProfileDescription />
       </PlaceHolder>
 
-      <PlaceHolder>
+      {/* <PlaceHolder>
         <BlogOverview />
-      </PlaceHolder>
+      </PlaceHolder> */}
 
       <Footer />
 
